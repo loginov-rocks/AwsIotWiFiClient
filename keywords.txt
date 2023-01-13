@@ -1,0 +1,31 @@
+#######################################
+# Syntax Coloring Map For AwsIotWiFiClient
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+AwsIotWiFiClient	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+setCertificates	KEYWORD2
+setEndpoint	KEYWORD2
+setReceiveMessageCallback	KEYWORD2
+setDebugOutput	KEYWORD2
+setClientId	KEYWORD2
+setSubscribeTopicFilter	KEYWORD2
+connect	KEYWORD2
+loop	KEYWORD2
+publishMessage	KEYWORD2
+
+#######################################
+# Instances (KEYWORD2)
+#######################################
+
+#######################################
+# Constants (LITERAL1)
+#######################################
