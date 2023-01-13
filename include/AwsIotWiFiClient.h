@@ -1,5 +1,5 @@
-#ifndef AwsIot_h
-#define AwsIot_h
+#ifndef AWSIOTWIFICLIENT_H_INCLUDED
+#define AWSIOTWIFICLIENT_H_INCLUDED
 
 #include <PubSubClient.h>
 #include <WiFiClientSecure.h>
