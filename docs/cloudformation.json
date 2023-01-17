@@ -1,0 +1,128 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Outputs": {
+        "ClientId": {
+            "Value": {
+                "Ref": "Thing"
+            }
+        },
+        "PublishTopicName": {
+            "Value": {
+                "Fn::Sub": "${AWS::StackName}-${TopicName}"
+            }
+        },
+        "SubscribeTopicFilter": {
+            "Value": {
+                "Fn::Sub": "${AWS::StackName}-${TopicName}"
+            }
+        }
+    },
+    "Parameters": {
+        "CertificateId": {
+            "Default": "fac44699cb780bf4a82a15648d8eccf78c7b50e33bcb8bda9f0ee766e4def351",
+            "Description": "Certificate ID",
+            "Type": "String"
+        },
+        "ThingName": {
+            "Default": "thing",
+            "Description": "Thing Name",
+            "Type": "String"
+        },
+        "TopicName": {
+            "Default": "topic",
+            "Description": "Topic Name",
+            "Type": "String"
+        }
+    },
+    "Resources": {
+        "Policy": {
+            "Type": "AWS::IoT::Policy",
+            "Properties": {
+                "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Action": "iot:Connect",
+                            "Resource": {
+                                "Fn::Sub": "arn:aws:iot:${AWS::Region}:${AWS::AccountId}:client/${Thing}"
+                            }
+                        },
+                        {
+                            "Effect": "Allow",
+                            "Action": "iot:Subscribe",
+                            "Resource": {
+                                "Fn::Sub": [
+                                    "arn:aws:iot:${AWS::Region}:${AWS::AccountId}:topicfilter/${TopicName}",
+                                    {
+                                        "TopicName": {
+                                            "Fn::Sub": "${AWS::StackName}-${TopicName}"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "Effect": "Allow",
+                            "Action": "iot:Publish",
+                            "Resource": {
+                                "Fn::Sub": [
+                                    "arn:aws:iot:${AWS::Region}:${AWS::AccountId}:topic/${TopicName}",
+                                    {
+                                        "TopicName": {
+                                            "Fn::Sub": "${AWS::StackName}-${TopicName}"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "Effect": "Allow",
+                            "Action": "iot:Receive",
+                            "Resource": {
+                                "Fn::Sub": [
+                                    "arn:aws:iot:${AWS::Region}:${AWS::AccountId}:topic/${TopicName}",
+                                    {
+                                        "TopicName": {
+                                            "Fn::Sub": "${AWS::StackName}-${TopicName}"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        "PolicyPrincipalAttachment": {
+            "Type": "AWS::IoT::PolicyPrincipalAttachment",
+            "Properties": {
+                "PolicyName": {
+                    "Ref": "Policy"
+                },
+                "Principal": {
+                    "Fn::Sub": "arn:aws:iot:${AWS::Region}:${AWS::AccountId}:cert/${CertificateId}"
+                }
+            }
+        },
+        "Thing": {
+            "Type": "AWS::IoT::Thing",
+            "Properties": {
+                "ThingName": {
+                    "Fn::Sub": "${AWS::StackName}-${ThingName}"
+                }
+            }
+        },
+        "ThingPrincipalAttachment": {
+            "Type": "AWS::IoT::ThingPrincipalAttachment",
+            "Properties": {
+                "Principal": {
+                    "Fn::Sub": "arn:aws:iot:${AWS::Region}:${AWS::AccountId}:cert/${CertificateId}"
+                },
+                "ThingName": {
+                    "Ref": "Thing"
+                }
+            }
+        }
+    }
+}
