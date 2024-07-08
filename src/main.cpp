@@ -7,11 +7,6 @@ BearSSL::X509List trustAnchorCertificate(rootCaCertificate);
 BearSSL::X509List clientCertificate(deviceCertificate);
 BearSSL::PrivateKey clientPrivateKey(privateKeyFile);
 
-const char endpoint[] = "endpoint.iot.us-east-1.amazonaws.com";
-const char clientId[] = "client";
-const char subscribeTopicFilter[] = "topic";
-const char publishTopicName[] = "topic";
-
 void receiveMessage(char *topic, byte *payload, unsigned int length)
 {
     //

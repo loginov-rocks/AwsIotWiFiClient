@@ -3,6 +3,11 @@
 
 #include "pgmspace.h"
 
+const char endpoint[] = "endpoint.iot.us-east-1.amazonaws.com";
+const char clientId[] = "client";
+const char publishTopicName[] = "topic";
+const char subscribeTopicFilter[] = "topic";
+
 // Download certificates and keys
 
 // Device certificate
