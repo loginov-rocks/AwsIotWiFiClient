@@ -19,7 +19,9 @@ String inputMessage = "";
 
 void receiveMessage(char *topic, byte *payload, unsigned int length)
 {
-  // TODO
+  Serial.print("Message received: ");
+  Serial.write(payload, length);
+  Serial.println();
 }
 
 void setupAwsIotWiFiClient()
