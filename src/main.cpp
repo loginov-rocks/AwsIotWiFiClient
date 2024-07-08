@@ -1,3 +1,11 @@
+#include "Arduino.h"
+
+#include "ESP8266WiFi.h"
+
+#include "DNSServer.h"
+#include "ESP8266WebServer.h"
+#include "WiFiManager.h"
+
 #include "AwsIotWiFiClient.h"
 #include "Secrets.h"
 
@@ -7,39 +15,65 @@ BearSSL::X509List trustAnchorCertificate(rootCaCertificate);
 BearSSL::X509List clientCertificate(deviceCertificate);
 BearSSL::PrivateKey clientPrivateKey(privateKeyFile);
 
+String inputMessage = "";
+
 void receiveMessage(char *topic, byte *payload, unsigned int length)
 {
-    //
+  // TODO
 }
 
 void setupAwsIotWiFiClient()
 {
-    Serial.println("Setup AWS IoT Wi-Fi Client...");
+  Serial.println("Setup AWS IoT Wi-Fi Client...");
 
-    awsIotWiFiClient.setDebugOutput(true)
-        .setCertificates(&trustAnchorCertificate, &clientCertificate, &clientPrivateKey)
-        .setEndpoint(endpoint)
-        .setReceiveMessageCallback(receiveMessage)
-        .setClientId(clientId)
-        .setSubscribeTopicFilter(subscribeTopicFilter)
-        .connect();
+  awsIotWiFiClient.setDebugOutput(true)
+      .setCertificates(&trustAnchorCertificate, &clientCertificate, &clientPrivateKey)
+      .setEndpoint(endpoint)
+      .setReceiveMessageCallback(receiveMessage)
+      .setClientId(clientId)
+      .setSubscribeTopicFilter(subscribeTopicFilter)
+      .connect();
 
-    Serial.println("AWS IoT Wi-Fi Client setup was successful!");
+  Serial.println("AWS IoT Wi-Fi Client setup was successful!");
 }
 
 void setup()
 {
-    Serial.begin(9600);
-    Serial.println("Setup...");
+  Serial.begin(9600);
+  Serial.println("Setup...");
 
-    setupAwsIotWiFiClient();
+  WiFiManager wifiManager;
+  wifiManager.autoConnect("AwsIotWiFiClient");
+  Serial.println("Connected!");
 
-    Serial.println("Setup was successful!");
+  setupAwsIotWiFiClient();
 
-    awsIotWiFiClient.publishMessage(publishTopicName, "Hello, world!");
+  Serial.println("Setup was successful!");
+
+  awsIotWiFiClient.publishMessage(publishTopicName, "Hello, world!");
 }
 
 void loop()
 {
-    awsIotWiFiClient.loop();
+  while (Serial.available() > 0)
+  {
+    char input = Serial.read();
+
+    if (input == ';')
+    {
+      Serial.println();
+      Serial.println("Publishing message: " + inputMessage);
+      const char *charArray = inputMessage.c_str();
+      awsIotWiFiClient.publishMessage(publishTopicName, charArray);
+      Serial.println("Message published!");
+      inputMessage = "";
+    }
+    else
+    {
+      Serial.print(input);
+      inputMessage += input;
+    }
+  }
+
+  awsIotWiFiClient.loop();
 }
