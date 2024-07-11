@@ -4,4 +4,10 @@
 [![Arduino Lint](https://github.com/loginov-rocks/AwsIotWiFiClient/actions/workflows/arduino-lint.yml/badge.svg)](https://github.com/loginov-rocks/AwsIotWiFiClient/actions/workflows/arduino-lint.yml)
 [![PlatformIO Build](https://github.com/loginov-rocks/AwsIotWiFiClient/actions/workflows/platformio-build.yml/badge.svg)](https://github.com/loginov-rocks/AwsIotWiFiClient/actions/workflows/platformio-build.yml)
 
-AWS IoT Wi-Fi Client
+AWS IoT Wi-Fi Client.
+
+Medium: https://loginov-rocks.medium.com/connect-nodemcu-esp8266-to-aws-iot-b75d2470b40b
+
+## Infrastructure View
+
+![Infrastructure View](https://raw.githubusercontent.com/loginov-rocks/AwsIotWiFiClient/main/docs/Infrastructure%20View.png)
