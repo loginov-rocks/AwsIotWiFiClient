@@ -1,13 +1,17 @@
 #include "Arduino.h"
 
+#include "AwsIotWiFiClient.h"
 #include "ESP8266WiFi.h"
 
-#include "DNSServer.h"
-#include "ESP8266WebServer.h"
-#include "WiFiManager.h"
+// Uncomment the following to use the WiFiManager library.
+// #include "DNSServer.h"
+// #include "ESP8266WebServer.h"
+// #include "WiFiManager.h"
 
-#include "AwsIotWiFiClient.h"
 #include "Secrets.h"
+
+const char ssid[] = "SSID";
+const char password[] = "Password";
 
 AwsIotWiFiClient awsIotWiFiClient;
 
@@ -16,6 +20,26 @@ BearSSL::X509List clientCertificate(deviceCertificate);
 BearSSL::PrivateKey clientPrivateKey(privateKeyFile);
 
 String inputMessage = "";
+
+void connectWiFi()
+{
+  Serial.print("Connecting to Wi-Fi \"");
+  Serial.print(ssid);
+  Serial.print("\"...");
+
+  WiFi.begin(ssid, password);
+
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    delay(500);
+    Serial.print('.');
+  }
+
+  Serial.println();
+  Serial.print("Local IP address: ");
+  Serial.println(WiFi.localIP());
+  Serial.println("Wi-Fi connection was successful!");
+}
 
 void receiveMessage(char *topic, byte *payload, unsigned int length)
 {
@@ -26,7 +50,7 @@ void receiveMessage(char *topic, byte *payload, unsigned int length)
 
 void setupAwsIotWiFiClient()
 {
-  Serial.println("Setup AWS IoT Wi-Fi Client...");
+  Serial.println("Setting up AWS IoT Wi-Fi Client...");
 
   awsIotWiFiClient.setDebugOutput(true)
       .setCertificates(&trustAnchorCertificate, &clientCertificate, &clientPrivateKey)
@@ -44,9 +68,11 @@ void setup()
   Serial.begin(9600);
   Serial.println("Setup...");
 
-  WiFiManager wifiManager;
-  wifiManager.autoConnect("AwsIotWiFiClient");
-  Serial.println("Connected!");
+  connectWiFi();
+  // Comment the previous line and uncomment the following to use the WiFiManager library.
+  // WiFiManager wifiManager;
+  // wifiManager.autoConnect("AwsIotWiFiClient");
+  // Serial.println("Connected!");
 
   setupAwsIotWiFiClient();
 
