@@ -64,12 +64,13 @@ void setup()
       .setCertificates(&trustAnchorCertificate, &clientCertificate, &clientPrivateKey)
       // Device Data Endpoint from IoT Core -> Settings:
       .setEndpoint("endpoint.iot.us-east-1.amazonaws.com")
-      // Callback that will be triggered when incoming messages are received (defined above):
+      // Callback function that will be triggered when incoming messages are received (defined above):
       .setReceiveMessageCallback(receiveMessage)
-      // Client ID aka thing name:
+      // MQTT client ID aka thing name:
       .setClientId("client")
-      // Topic name to subscribe to incoming messages:
+      // MQTT topic filter to subscribe to incoming messages:
       .setSubscribeTopicFilter("topic")
+      // Connect to the AWS IoT service:
       .connect();
 }
 
@@ -91,7 +92,13 @@ void loop()
 
 ### `AwsIotWiFiClient`
 
-AWS IoT Wi-Fi Client class.
+AWS IoT Wi-Fi Client class is the core component of the library, encapsulating all the functionalities needed to
+connect an ESP8266 microcontroller to AWS IoT Core. It manages the setup of secure SSL/TLS communication using
+[WiFiClientSecure](https://github.com/esp8266/Arduino/blob/master/libraries/ESP8266WiFi/src/WiFiClientSecureBearSSL.h)
+and facilitates MQTT messaging via [PubSubClient](https://registry.platformio.org/libraries/knolleary/PubSubClient).
+
+The class provides methods to configure device-specific credentials, establish connections, and subscribe to and
+publish MQTT messages. Additionally, it includes a callback mechanism to process incoming messages.
 
 **Kind**: class
 
@@ -111,81 +118,92 @@ AWS IoT Wi-Fi Client class.
 
 #### `setCertificates(&trustAnchorCertificate, &clientCertificate, &clientPrivateKey)`
 
-Set certificates.
+Set certificates to establish secure communication.
 
 **Kind**: instance method of `AwsIotWiFiClient`
 
-| Parameter               | Type | Description              |
-| ----------------------- | ---- | ------------------------ |
-| &trustAnchorCertificate | TODO | Trust anchor certificate |
-| &clientCertificate      | TODO | Client certificate       |
-| &clientPrivateKey       | TODO | Client private key       |
+| Parameter               | Type          | Description                             |
+| ----------------------- | ------------- | --------------------------------------- |
+| &trustAnchorCertificate | `X509List*`   | Pointer to the trust anchor certificate |
+| &clientCertificate      | `X509List*`   | Pointer to the Client certificate       |
+| &clientPrivateKey       | `PrivateKey*` | Pointer to the Client private key       |
 
 ---
 
 #### `setEndpoint(endpoint)`
 
-Set endpoint.
+Set Device Data Endpoint from IoT Core -> Settings.
 
 **Kind**: instance method of `AwsIotWiFiClient`
 
-| Parameter | Type | Description |
-| --------- | ---- | ----------- |
-| endpoint  | TODO | Endpoint    |
+| Parameter | Type    | Description          |
+| --------- | ------- | -------------------- |
+| endpoint  | `char*` | Device Data Endpoint |
 
 ---
 
 #### `setReceiveMessageCallback(callback)`
 
-Set receive message callback.
+Set the callback function that will be triggered when incoming messages are received.
 
 **Kind**: instance method of `AwsIotWiFiClient`
 
-| Parameter | Type | Description |
-| --------- | ---- | ----------- |
-| callback  | TODO | Callback    |
+| Parameter | Type                                                   | Description                                           |
+| --------- | ------------------------------------------------------ | ----------------------------------------------------- |
+| callback  | `std::function<void(char *, uint8_t *, unsigned int)>` | Function to call when an incoming message is received |
+
+Example:
+
+```cpp
+void callback(char *topic, byte *payload, unsigned int length)
+{
+  Serial.print("Message received: ");
+  Serial.write(payload, length);
+  Serial.println();
+}
+```
 
 ---
 
 #### `setClientId(clientId)`
 
-Set client ID.
+Set the MQTT client ID aka thing name.
 
 **Kind**: instance method of `AwsIotWiFiClient`
 
-| Parameter | Type | Description |
-| --------- | ---- | ----------- |
-| clientId  | TODO | Client ID   |
+| Parameter | Type    | Description    |
+| --------- | ------- | -------------- |
+| clientId  | `char*` | MQTT client ID |
 
 ---
 
 #### `setSubscribeTopicFilter(subscribeTopicFilter)`
 
-Set subscribe topic filter.
+Set the MQTT topic filter to subscribe to incoming messages.
 
 **Kind**: instance method of `AwsIotWiFiClient`
 
-| Parameter            | Type | Description            |
-| -------------------- | ---- | ---------------------- |
-| subscribeTopicFilter | TODO | Subscribe topic filter |
+| Parameter            | Type    | Description       |
+| -------------------- | ------- | ----------------- |
+| subscribeTopicFilter | `char*` | MQTT topic filter |
 
 ---
 
 #### `setDebugOutput(debugOutput)`
 
-Set debug output.
+Enable or disable debug output. Enabled by default.
 
 **Kind**: instance method of `AwsIotWiFiClient`
 
-| Parameter   | Type      | Description  |
-| ----------- | --------- | ------------ |
-| debugOutput | `boolean` | Debug output |
+| Parameter   | Type      | Description                                       |
+| ----------- | --------- | ------------------------------------------------- |
+| debugOutput | `boolean` | `true` to enable, `false` to disable debug output |
 
 ---
 
 #### `connect()`
 
-Connect.
+Connect to the AWS IoT service.
 
 **Kind**: instance method of `AwsIotWiFiClient`
 
@@ -193,7 +211,7 @@ Connect.
 
 #### `loop()`
 
-Loop.
+Keep the MQTT connection alive and process incoming messages. This should be called regularly in the main loop.
 
 **Kind**: instance method of `AwsIotWiFiClient`
 
@@ -201,13 +219,13 @@ Loop.
 
 #### `publishMessage(topicName, message)` ⇒ `boolean`
 
-Publish message.
+Publish a message to the specified MQTT topic.
 
 **Kind**: instance method of `AwsIotWiFiClient`
 
 **Returns**: `boolean` - `true` in case of success, or `false` otherwise
 
-| Parameter | Type | Description |
-| --------- | ---- | ----------- |
-| topicName | TODO | Topic name  |
-| message   | TODO | Message     |
+| Parameter | Type    | Description                  |
+| --------- | ------- | ---------------------------- |
+| topicName | `char*` | The MQTT topic to publish to |
+| message   | `char*` | The message payload          |
