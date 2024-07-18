@@ -84,9 +84,28 @@ void loop()
 }
 ```
 
-## Infrastructure View
+## AWS Infrastructure
 
 ![Infrastructure View](https://raw.githubusercontent.com/loginov-rocks/AwsIotWiFiClient/main/docs/Infrastructure%20View.png)
+
+There are several additional AWS components shown on the right, beyond the AWS IoT Core, but they are just an example
+of how you can further extend the solution, while we are going to focus on the central and left parts:
+
+* AWS IoT Core configuration;
+* Microcontroller (MCU) connection over MQTT to AWS IoT Core;
+* Device certificate and policy that will grant necessary permissions to establish a connection, publish, and receive
+  messages from AWS IoT Core.
+
+MQTT has gained popularity within the hobbyist community for DIY IoT projects due to its simplicity and efficiency. AWS
+IoT leverages MQTT as a standard to enable seamless, real-time data exchange between IoT devices and the cloud, making
+it ideal for connecting constrained devices like the NodeMCU.
+
+Device certificate ensures that the communication between your microcontroller and AWS is encrypted and secure, but
+also authenticates your device with AWS IoT, confirming its identity — this guarantees that only trusted devices can
+connect to your AWS infrastructure, maintaining the integrity of your system.
+
+* [CloudFormation](https://github.com/loginov-rocks/AwsIotWiFiClient/blob/main/docs/cloudformation.json)
+* [Policy](https://github.com/loginov-rocks/AwsIotWiFiClient/blob/main/docs/policy.json)
 
 ## API
 
@@ -125,8 +144,8 @@ Set certificates to establish secure communication.
 | Parameter               | Type          | Description                             |
 | ----------------------- | ------------- | --------------------------------------- |
 | &trustAnchorCertificate | `X509List*`   | Pointer to the trust anchor certificate |
-| &clientCertificate      | `X509List*`   | Pointer to the Client certificate       |
-| &clientPrivateKey       | `PrivateKey*` | Pointer to the Client private key       |
+| &clientCertificate      | `X509List*`   | Pointer to the client certificate       |
+| &clientPrivateKey       | `PrivateKey*` | Pointer to the client private key       |
 
 ---
 
@@ -191,7 +210,7 @@ Set the MQTT topic filter to subscribe to incoming messages.
 
 #### `setDebugOutput(debugOutput)`
 
-Enable or disable debug output. Enabled by default.
+Enable or disable debug output. Disabled by default.
 
 **Kind**: instance method of `AwsIotWiFiClient`
 
