@@ -10,12 +10,12 @@ The **AwsIotWiFiClient** library is designed to facilitate the connection of ESP
 library provides an abstraction layer that simplifies the process of establishing secure SSL/TLS communication and MQTT
 messaging between the ESP8266 microcontroller and AWS IoT services.
 
-## Key Features
+### Key Features
 
 1. **Secure Communication:** uses
    [WiFiClientSecure](https://github.com/esp8266/Arduino/blob/master/libraries/ESP8266WiFi/src/WiFiClientSecureBearSSL.h)
    to manage certificates and private keys, ensuring secure communication with AWS IoT Core. Unlike other libraries
-   that require creating policies and making direct calls, AwsIotWiFiClient establishes secure communication using
+   that require creating policies and making direct calls, **AwsIotWiFiClient** establishes secure communication using
    device certificates, which is the native approach for AWS IoT.
 2. **MQTT Messaging:** incorporates the [PubSubClient](https://registry.platformio.org/libraries/knolleary/PubSubClient)
    library to support MQTT messaging, allowing devices to publish and subscribe to topics on AWS IoT Core.
@@ -26,7 +26,7 @@ messaging between the ESP8266 microcontroller and AWS IoT services.
 5. **Debugging:** offers debug output to assist in troubleshooting and verifying the connection and communication
    processes.
 
-## Usage Scenario
+### Usage Scenario
 
 The **AwsIotWiFiClient** library is ideal for projects that involve ESP8266 devices needing to communicate with AWS IoT
 Core. Typical applications include sensor data collection, remote monitoring, and control systems where reliable and
@@ -115,7 +115,7 @@ void loop()
 
 ## AWS Infrastructure
 
-![Infrastructure View](https://raw.githubusercontent.com/loginov-rocks/AwsIotWiFiClient/main/docs/Infrastructure%20View.png)
+![Infrastructure View](https://raw.githubusercontent.com/loginov-rocks/AwsIotWiFiClient/main/docs/aws/Infrastructure%20View.png)
 
 There are several additional AWS components shown on the right, beyond the AWS IoT Core, but they are just an example
 of how you can further extend the solution, while we are going to focus on the central and left parts:
@@ -133,8 +133,8 @@ Device certificate ensures that the communication between your microcontroller a
 also authenticates your device with AWS IoT, confirming its identity — this guarantees that only trusted devices can
 connect to your AWS infrastructure, maintaining the integrity of your system.
 
-* [CloudFormation](https://github.com/loginov-rocks/AwsIotWiFiClient/blob/main/docs/cloudformation.json)
-* [Policy](https://github.com/loginov-rocks/AwsIotWiFiClient/blob/main/docs/policy.json)
+* [CloudFormation](https://github.com/loginov-rocks/AwsIotWiFiClient/blob/main/docs/aws/cloudformation.json)
+* [Policy](https://github.com/loginov-rocks/AwsIotWiFiClient/blob/main/docs/aws/policy.json)
 
 ## API
 
