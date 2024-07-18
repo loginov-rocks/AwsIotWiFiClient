@@ -11,7 +11,7 @@ const char publishTopicName[] = "topic";
 const char subscribeTopicFilter[] = "topic";
 
 // Device certificate
-// *-certificate.pem.crt
+// Copy and paste contents from *-certificate.pem.crt
 static const char deviceCertificate[] PROGMEM = R"KEY(
 -----BEGIN CERTIFICATE-----
 
@@ -19,7 +19,7 @@ static const char deviceCertificate[] PROGMEM = R"KEY(
 )KEY";
 
 // Key files / Private key file
-// *-private.pem.key
+// Copy and paste contents from *-private.pem.key
 static const char privateKeyFile[] PROGMEM = R"KEY(
 -----BEGIN RSA PRIVATE KEY-----
 
@@ -27,7 +27,7 @@ static const char privateKeyFile[] PROGMEM = R"KEY(
 )KEY";
 
 // RSA 2048 bit key: Amazon Root CA 1
-// AmazonRootCA1.cer
+// Copy and paste contents from AmazonRootCA1.cer
 static const char rootCaCertificate[] PROGMEM = R"EOF(
 -----BEGIN CERTIFICATE-----
 

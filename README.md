@@ -91,8 +91,12 @@ void loop()
 
 ### `AwsIotWiFiClient`
 
+AWS IoT Wi-Fi Client class.
+
+**Kind**: class
+
 <!-- no toc -->
-* [AwsIotWiFiClient](#awsiotwificlient)
+* [AwsIotWiFiClient](#awsiotwificlient-1)
   * [setCertificates(&trustAnchorCertificate, &clientCertificate, &clientPrivateKey)](#setcertificatestrustanchorcertificate-clientcertificate-clientprivatekey)
   * [setEndpoint(endpoint)](#setendpointendpoint)
   * [setReceiveMessageCallback(callback)](#setreceivemessagecallbackcallback)
@@ -101,40 +105,109 @@ void loop()
   * [setDebugOutput(debugOutput)](#setdebugoutputdebugoutput)
   * [connect()](#connect)
   * [loop()](#loop)
-  * [publishMessage(topicName, message)](#publishmessagetopicname-message)
+  * [publishMessage(topicName, message) ⇒ boolean](#publishmessagetopicname-message--boolean)
 
 ---
 
 #### `setCertificates(&trustAnchorCertificate, &clientCertificate, &clientPrivateKey)`
 
+Set certificates.
+
+**Kind**: instance method of `AwsIotWiFiClient`
+
+| Parameter               | Type | Description              |
+| ----------------------- | ---- | ------------------------ |
+| &trustAnchorCertificate | TODO | Trust anchor certificate |
+| &clientCertificate      | TODO | Client certificate       |
+| &clientPrivateKey       | TODO | Client private key       |
+
 ---
 
 #### `setEndpoint(endpoint)`
+
+Set endpoint.
+
+**Kind**: instance method of `AwsIotWiFiClient`
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| endpoint  | TODO | Endpoint    |
 
 ---
 
 #### `setReceiveMessageCallback(callback)`
 
+Set receive message callback.
+
+**Kind**: instance method of `AwsIotWiFiClient`
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| callback  | TODO | Callback    |
+
 ---
 
 #### `setClientId(clientId)`
+
+Set client ID.
+
+**Kind**: instance method of `AwsIotWiFiClient`
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| clientId  | TODO | Client ID   |
 
 ---
 
 #### `setSubscribeTopicFilter(subscribeTopicFilter)`
 
+Set subscribe topic filter.
+
+**Kind**: instance method of `AwsIotWiFiClient`
+
+| Parameter            | Type | Description            |
+| -------------------- | ---- | ---------------------- |
+| subscribeTopicFilter | TODO | Subscribe topic filter |
+
 ---
 
 #### `setDebugOutput(debugOutput)`
+
+Set debug output.
+
+**Kind**: instance method of `AwsIotWiFiClient`
+
+| Parameter   | Type      | Description  |
+| ----------- | --------- | ------------ |
+| debugOutput | `boolean` | Debug output |
 
 ---
 
 #### `connect()`
 
+Connect.
+
+**Kind**: instance method of `AwsIotWiFiClient`
+
 ---
 
 #### `loop()`
 
+Loop.
+
+**Kind**: instance method of `AwsIotWiFiClient`
+
 ---
 
-#### `publishMessage(topicName, message)`
+#### `publishMessage(topicName, message)` ⇒ `boolean`
+
+Publish message.
+
+**Kind**: instance method of `AwsIotWiFiClient`
+
+**Returns**: `boolean` - `true` in case of success, or `false` otherwise
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| topicName | TODO | Topic name  |
+| message   | TODO | Message     |
