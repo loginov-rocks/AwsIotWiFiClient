@@ -6,6 +6,35 @@
 
 Connect NodeMCU (ESP8266) to AWS IoT: [Medium](https://loginov-rocks.medium.com/connect-nodemcu-esp8266-to-aws-iot-b75d2470b40b)
 
+The **AwsIotWiFiClient** library is designed to facilitate the connection of ESP8266 devices to AWS IoT Core. This
+library provides an abstraction layer that simplifies the process of establishing secure SSL/TLS communication and MQTT
+messaging between the ESP8266 microcontroller and AWS IoT services.
+
+## Key Features
+
+1. **Secure Communication:** uses
+   [WiFiClientSecure](https://github.com/esp8266/Arduino/blob/master/libraries/ESP8266WiFi/src/WiFiClientSecureBearSSL.h)
+   to manage certificates and private keys, ensuring secure communication with AWS IoT Core. Unlike other libraries
+   that require creating policies and making direct calls, AwsIotWiFiClient establishes secure communication using
+   device certificates, which is the native approach for AWS IoT.
+2. **MQTT Messaging:** incorporates the [PubSubClient](https://registry.platformio.org/libraries/knolleary/PubSubClient)
+   library to support MQTT messaging, allowing devices to publish and subscribe to topics on AWS IoT Core.
+3. **Easy Configuration:** provides a straightforward API for setting up certificates, endpoints, client IDs, and topic
+   filters.
+4. **Callback Mechanism:** supports callback function to handle incoming MQTT messages, enabling real-time data
+   processing and event handling.
+5. **Debugging:** offers debug output to assist in troubleshooting and verifying the connection and communication
+   processes.
+
+## Usage Scenario
+
+The **AwsIotWiFiClient** library is ideal for projects that involve ESP8266 devices needing to communicate with AWS IoT
+Core. Typical applications include sensor data collection, remote monitoring, and control systems where reliable and
+secure data exchange is critical.
+
+By abstracting the complexity of secure communication and MQTT messaging, the **AwsIotWiFiClient** library allows
+developers to focus on implementing the business logic of their IoT applications.
+
 ## Quick Start
 
 ```cpp
